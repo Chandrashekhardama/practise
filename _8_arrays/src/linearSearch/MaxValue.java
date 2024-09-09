@@ -1,4 +1,4 @@
-package _8_arrays;
+package linearSearch;
 
 public class MaxValue {
 	public static void main(String[] args) {
