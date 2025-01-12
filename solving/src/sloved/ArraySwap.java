@@ -1,4 +1,4 @@
-package _8_arrays;
+package sloved;
 
 import java.util.Arrays;
 
