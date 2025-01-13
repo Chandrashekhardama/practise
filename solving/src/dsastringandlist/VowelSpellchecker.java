@@ -1,89 +1,69 @@
 package dsastringandlist;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class VowelSpellchecker {
-//	public String[] spellchecker(String[] wordlist, String[] queries) {
-//		List<String> result = new ArrayList();
-//		String vowels = "aeiouAEIOU";
-//		HashMap<String, Integer> map = new HashMap<>();
-//		for (int i = 0; i < wordlist.length; i++) {
-//			if (wordlist[i].contains(vowels)) {
-//
-//			}
-//			map.put(wordlist[i], i);
-//		}
-//
-//		for (int j = 0; j < queries.length; j++) {
-//			if (map.containsKey(queries[j])) {
-//				result.add(queries[j]);
-//			} else {
-//				result.add("");
-//			}
-//		}
-//		return result.toArray(new String[0]);
-//	}
-
-	// Helper function to replace all vowels with a common character, say '*'.
-	private String normalize(String word) {
-		return word.replaceAll("[aeiouAEIOU]", "*");
-	}
-
+    // 966. Vowel Spellchecker
 	public String[] spellchecker(String[] wordlist, String[] queries) {
-		Set<String> exactMatchSet = new HashSet<>();
-		Map<String, Set<String>> vowelMatchMap = new HashMap<>();
+        Map<String, String> exactMatchMap = new HashMap<>();
+        Map<String, String> caseInsensitiveMap = new HashMap<>();
+        Map<String, String> vowelMatchMap = new HashMap<>();
 
-		// Build a set for exact matches and a map for vowel matches
-		for (String word : wordlist) {
-			exactMatchSet.add(word);
-			String normalizedWord = normalize(word);
-			vowelMatchMap.putIfAbsent(normalizedWord, new HashSet<>());
-			vowelMatchMap.get(normalizedWord).add(word);
-		}
+        // Populate the maps
+        for (String word : wordlist) {
+            exactMatchMap.putIfAbsent(word, word);
+            caseInsensitiveMap.putIfAbsent(word.toLowerCase(), word);
+            vowelMatchMap.putIfAbsent(normalize(word), word);
+        }
 
-		String[] result = new String[queries.length];
+        String[] result = new String[queries.length];
 
-		for (int i = 0; i < queries.length; i++) {
-			String query = queries[i];
+        for (int i = 0; i < queries.length; i++) {
+            String query = queries[i];
 
-			// Check for exact match first
-			if (exactMatchSet.contains(query)) {
-				result[i] = query;
-			}
-			// If no exact match, check for vowel match
-			else {
-				String normalizedQuery = normalize(query);
-				Set<String> vowelMatches = vowelMatchMap.getOrDefault(normalizedQuery, new HashSet<>());
+            // Exact match
+            if (exactMatchMap.containsKey(query)) {
+                result[i] = query;
+            } 
+            // Case-insensitive match
+            else if (caseInsensitiveMap.containsKey(query.toLowerCase())) {
+                result[i] = caseInsensitiveMap.get(query.toLowerCase());
+            } 
+            // Vowel match
+            else {
+                result[i] = vowelMatchMap.getOrDefault(normalize(query), "");
+            }
+        }
 
-				// Check for a case-insensitive match of the query
-				for (String match : vowelMatches) {
-					if (match.equalsIgnoreCase(query)) {
-						result[i] = match;
-						break;
-					}
-				}
-				// If no match is found, return an empty string
-				if (result[i] == null) {
-					result[i] = "";
-				}
-			}
-		}
+        return result;
+    }
 
-		return result;
-	}
+    // Optimize normalize method using StringBuilder for better performance
+    private String normalize(String word) {
+        StringBuilder sb = new StringBuilder();
+        for (char c : word.toLowerCase().toCharArray()) {
+            if (isVowel(c)) {
+                sb.append('*');
+            } else {
+                sb.append(c);
+            }
+        }
+        return sb.toString();
+    }
 
-	public static void main(String[] args) {
-		VowelSpellchecker solution = new VowelSpellchecker();
+    // Helper method to check if a character is a vowel
+    private boolean isVowel(char c) {
+        return "aeiou".indexOf(c) != -1;
+    }
 
-		String[] wordlist = { "KiTe", "kite", "hare", "Hare" };
-		String[] queries = { "kite", "Kite", "KiTe", "hAre", "Hare", "Hear" };
+    public static void main(String[] args) {
+        VowelSpellchecker solution = new VowelSpellchecker();
 
-		String[] result = solution.spellchecker(wordlist, queries);
+        String[] wordlist = { "KiTe", "kite", "hare", "Hare" };
+        String[] queries = { "kite", "Kite", "KiTe", "hAre", "Hare", "Hear" };
 
-		System.out.println(Arrays.toString(result));
-	}
+        String[] result = solution.spellchecker(wordlist, queries);
+
+        System.out.println(Arrays.toString(result));
+    }
 }
