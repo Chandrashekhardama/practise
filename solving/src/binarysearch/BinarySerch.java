@@ -7,7 +7,7 @@ public class BinarySerch {
 		int[] arr = { 50, 60, 70, 80, 85, 95, 99, 100 };
 		int target = 86;
 		BinarySerch sol = new BinarySerch();
-		int targetIndex = sol.searching(arr, target);
+		int targetIndex = sol.orderAgnosticBs(arr, target);
 		if (targetIndex == -1) {
 			System.out.println("Target value does not exist in the array.");
 		} else {
@@ -15,7 +15,7 @@ public class BinarySerch {
 		}
 	}
 
-	private int searching(int[] arr, int target) {
+	private int orderAgnosticBs(int[] arr, int target) {
 		if (arr == null || arr.length < 0) {
 			return -1;
 		}

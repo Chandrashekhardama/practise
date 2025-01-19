@@ -1,6 +1,7 @@
 package binarysearch;
 
 public class InfiniteArrSerach {
+	//https://www.geeksforgeeks.org/find-position-element-sorted-array-infinite-numbers/
 	//since its infinate array we length use not good practise 
 	//thats the reason we checking chunks if not present then we 2x the size of chunk  untill we find them
 	public static void main(String[] args) {
