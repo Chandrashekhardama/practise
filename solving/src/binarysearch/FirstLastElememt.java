@@ -1,14 +1,14 @@
 package binarysearch;
 
 public class FirstLastElememt {
-	// 34. Find First and Last Position of Element in Sorted Array==[3,4]
+	// 34. Find First and Last occurrence Position of Element in Sorted Array==[3,4]
 	public static void main(String[] args) {
 		FirstLastElememt sol = new FirstLastElememt();
 		int[] nums = { 5, 7, 7, 7, 8, 8, 10 };
 		int target = 7;
 		int[] solutions = sol.searchRange(nums, target);
 		for (int solution : solutions) {
-			System.out.print(solution);
+			System.out.print("index: " + solution + " ");
 		}
 	}
 

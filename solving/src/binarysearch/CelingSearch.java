@@ -2,11 +2,11 @@ package binarysearch;
 
 public class CelingSearch {
 	
-	//Celing for number
+	//Celing for number - next nearer value to the target
 	public static void main(String[] args) {
 
 		int[] arr = { 2, 3, 6, 9, 13, 16, 39, 50 };
-		int target = 1;
+		int target = 30;
 
 		CelingSearch sol = new CelingSearch();
 		int result = sol.findTheCelingNumber(arr, target);
